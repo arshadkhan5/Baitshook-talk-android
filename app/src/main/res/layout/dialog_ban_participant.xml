@@ -9,7 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:background="@color/white"
+    android:layout_margin="@dimen/standard_quarter_margin"
+    tools:background="@drawable/rounded_drawable"
     tools:visibility="visible">
 
     <com.google.android.material.textview.MaterialTextView

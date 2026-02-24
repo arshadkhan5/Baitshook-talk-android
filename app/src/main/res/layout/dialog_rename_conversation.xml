@@ -11,9 +11,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg_default"
     android:paddingStart="@dimen/standard_padding"
     android:paddingTop="@dimen/standard_padding"
-    android:paddingEnd="@dimen/standard_half_padding">
+    android:paddingEnd="@dimen/standard_half_padding"
+    android:paddingBottom="@dimen/standard_half_margin">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout"
@@ -28,7 +30,7 @@
         app:boxStrokeColor="@color/colorPrimary"
         app:hintTextColor="@color/colorPrimary">
 
-        <com.nextcloud.talk.utils.EmojiTextInputEditText
+        <com.gcc.talk.gccUtils.GccEmojiTextInputEditText
             android:id="@+id/text_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

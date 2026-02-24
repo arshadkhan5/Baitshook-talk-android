@@ -13,13 +13,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context=".activities.MainActivity">
+    tools:context=".gccActivities.GccMainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_default"
+        android:background="@color/bg_popup"
         android:elevation="0dp"
         android:clipChildren="true"
         android:clipToPadding="false"

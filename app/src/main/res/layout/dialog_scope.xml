@@ -12,18 +12,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/bg_default"
     android:paddingBottom="@dimen/standard_half_padding">
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
         android:id="@+id/bottom_sheet_drag_handle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_drawable"/>
 
     <LinearLayout
         android:id="@+id/scope_private"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/rounded_drawable"
+        android:layout_margin="@dimen/standard_quarter_margin"
         android:orientation="horizontal"
         android:paddingStart="@dimen/standard_padding"
         android:paddingTop="@dimen/standard_half_padding"
@@ -69,11 +72,13 @@
         android:id="@+id/scope_local"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/rounded_drawable"
+        android:layout_margin="@dimen/standard_quarter_margin"
         android:orientation="horizontal"
         android:paddingStart="@dimen/standard_padding"
         android:paddingTop="@dimen/standard_half_padding"
         android:paddingEnd="@dimen/standard_padding"
+
         android:paddingBottom="@dimen/standard_half_padding">
 
         <ImageView
@@ -115,9 +120,11 @@
         android:id="@+id/scope_federated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingStart="@dimen/standard_padding"
+
+        android:background="@drawable/rounded_drawable"
+        android:layout_margin="@dimen/standard_quarter_margin"
         android:paddingTop="@dimen/standard_half_padding"
         android:paddingEnd="@dimen/standard_padding"
         android:paddingBottom="@dimen/standard_half_padding">
@@ -161,10 +168,12 @@
         android:id="@+id/scope_published"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingStart="@dimen/standard_padding"
         android:paddingTop="@dimen/standard_half_padding"
+
+        android:background="@drawable/rounded_drawable"
+        android:layout_margin="@dimen/standard_quarter_margin"
         android:paddingEnd="@dimen/standard_padding"
         android:paddingBottom="@dimen/standard_half_padding">
 

@@ -139,7 +139,7 @@
                                     android:backgroundTint="@android:color/white"
                                     android:textColor="@android:color/holo_red_light"
                                     android:visibility="gone"
-                                    app:icon="@drawable/ic_call_end_white_24px"
+                                    app:icon="@drawable/accept_call"
                                     app:iconGravity="textEnd"
                                     app:iconPadding="16dp"
                                     app:iconTint="@android:color/holo_red_light"
@@ -261,7 +261,7 @@
                         app:borderWidth="0dp"
                         app:fabCustomSize="40dp"
                         app:shapeAppearance="@style/fab_3_rounded"
-                        app:srcCompat="@drawable/ic_call_end_white_24px"
+                        app:srcCompat="@drawable/accept_call"
                         app:tint="@color/white" />
                 </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>

@@ -12,6 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_gravity="center"
+    android:background="@color/bg_default"
     android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical">
 
@@ -22,7 +23,8 @@
         android:layout_marginTop="@dimen/standard_half_margin"
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/standard_margin"
-        app:cardCornerRadius="8dp"
+        android:layout_marginBottom="@dimen/standard_quarter_margin"
+        app:cardCornerRadius="16dp"
         app:cardElevation="2dp"
         app:strokeWidth="0dp">
 

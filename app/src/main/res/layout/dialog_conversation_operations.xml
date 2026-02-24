@@ -12,6 +12,7 @@
     style="@style/Widget.Material3.BottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg_default"
     android:layout_gravity="bottom"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -25,6 +26,7 @@
         <com.google.android.material.bottomsheet.BottomSheetDragHandleView
             android:id="@+id/bottom_sheet_drag_handle"
             android:layout_width="match_parent"
+            android:background="@drawable/rounded_drawable"
             android:layout_height="wrap_content" />
 
         <LinearLayout
@@ -32,6 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/rounded_drawable"
+            android:layout_margin="@dimen/standard_quarter_margin"
             tools:ignore="UseCompoundDrawables">
 
             <TextView

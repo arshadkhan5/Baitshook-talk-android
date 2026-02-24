@@ -10,12 +10,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_container"
     android:layout_width="match_parent"
+    android:background="@color/bg_default"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/geocoding_appbar"
         android:layout_width="match_parent"
+        android:background="@color/bg_popup"
         android:layout_height="wrap_content">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/geocoding_toolbar"
@@ -33,6 +35,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/geocoding_results"
         android:layout_width="match_parent"
+
+        android:background="@drawable/rounded_drawable"
         android:layout_height="match_parent"/>
 
 </LinearLayout>

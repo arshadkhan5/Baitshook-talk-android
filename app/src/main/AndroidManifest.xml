@@ -83,10 +83,10 @@
     <uses-permission android:name="${applicationId}.${broadcastPermission}" />
 
     <application
-        android:name=".application.NextcloudTalkApplication"
+        android:name="com.gcc.talk.gccApplication.GccTalkApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_config"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/gcc_talk_icon"
         android:label="@string/nc_app_name"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -106,7 +106,7 @@
             android:value="10" />
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.gcc.talk.gccActivities.GccMainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -125,33 +125,33 @@
         </activity>
 
         <activity
-            android:name=".account.ServerSelectionActivity"
+            android:name="com.gcc.talk.gccAccount.GccServerSelectionActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".account.BrowserLoginActivity"
+            android:name=".gccAccount.GccBrowserLoginActivity"
             android:theme="@style/AppTheme" />
 
-        <activity android:name=".contacts.ContactsActivity"
+        <activity android:name="com.gcc.talk.gccContacts.ContactsActivity"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name=".conversationcreation.ConversationCreationActivity"
+        <activity android:name="com.gcc.talk.gccConversationcreation.ConversationCreationActivity"
             android:theme="@style/AppTheme"/>
 
         <activity
-            android:name=".account.AccountVerificationActivity"
+            android:name=".gccAccount.GccAccountVerificationActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".account.SwitchAccountActivity"
+            android:name="com.gcc.talk.gccAccount.GccSwitchAccountActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".chat.ScheduledMessagesActivity"
+            android:name="com.gcc.talk.gccChat.GccScheduledMessagesActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".conversationlist.ConversationsListActivity"
+            android:name="com.gcc.talk.gccConversationlist.GccConversationsListActivity"
             android:exported="true"
             android:theme="@style/AppTheme">
 
@@ -169,11 +169,11 @@
         </activity>
 
         <activity
-            android:name=".chat.ChatActivity"
+            android:name="com.gcc.talk.gccChat.GccChatActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".activities.CallActivity"
+            android:name="com.gcc.talk.gccActivities.GccCallActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
@@ -183,7 +183,7 @@
             android:theme="@style/AppTheme.CallLauncher" />
 
         <activity
-            android:name=".callnotification.CallNotificationActivity"
+            android:name="com.gcc.talk.gccCallnotification.GccCallNotificationActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
@@ -193,100 +193,100 @@
             android:theme="@style/AppTheme.CallLauncher" />
 
         <activity
-            android:name=".fullscreenfile.FullScreenImageActivity"
+            android:name="com.gcc.talk.gccFullscreenfile.GccFullScreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullScreenImageTheme" />
 
         <activity
-            android:name=".fullscreenfile.FullScreenMediaActivity"
+            android:name="com.gcc.talk.gccFullscreenfile.GccFullScreenMediaActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullScreenMediaTheme" />
 
         <activity
-            android:name=".fullscreenfile.FullScreenTextViewerActivity"
+            android:name="com.gcc.talk.gccFullscreenfile.GccFullScreenTextViewerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullScreenTextTheme" />
 
         <activity
-            android:name=".activities.TakePhotoActivity"
+            android:name="com.gcc.talk.gccActivities.GccTakePhotoActivity"
             android:theme="@style/TakePhotoTheme"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".shareditems.activities.SharedItemsActivity"
+            android:name="com.gcc.talk.gccShareditems.activities.GccSharedItemsActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".remotefilebrowser.activities.RemoteFileBrowserActivity"
+            android:name="com.gcc.talk.gccRemotefilebrowser.activities.GccRemoteFileBrowserActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".messagesearch.MessageSearchActivity"
+            android:name="com.gcc.talk.gccMessagesearch.GccMessageSearchActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".location.LocationPickerActivity"
+            android:name="com.gcc.talk.gccLocation.GccLocationPickerActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".location.GeocodingActivity"
+            android:name="com.gcc.talk.gccLocation.GccGeocodingActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".translate.ui.TranslateActivity"
+            android:name="com.gcc.talk.gccTranslate.ui.GccTranslateActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".profile.ProfileActivity"
+            android:name="com.gcc.talk.gccProfile.GccProfileActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="com.gcc.talk.gccSettings.GccSettingsActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".diagnose.DiagnoseActivity"
+            android:name="com.gcc.talk.gccDiagnose.GccDiagnoseActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".conversationinfo.ConversationInfoActivity"
+            android:name="com.gcc.talk.gccConversationinfo.GccConversationInfoActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".conversationinfoedit.ConversationInfoEditActivity"
+            android:name="com.gcc.talk.gccConversationinfoedit.GccConversationInfoEditActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".openconversations.ListOpenConversationsActivity"
+            android:name="com.gcc.talk.gccOpenconversations.GccListOpenConversationsActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".invitation.InvitationsActivity"
+            android:name="com.gcc.talk.gccInvitation.GccInvitationsActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".lock.LockedActivity"
+            android:name="com.gcc.talk.gccLock.GccLockedActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".threadsoverview.ThreadsOverviewActivity"
+            android:name="com.gcc.talk.gccThreadsoverview.ThreadsOverviewActivity"
             android:theme="@style/AppTheme" />
 
         <receiver
-            android:name=".receivers.PackageReplacedReceiver"
+            android:name="com.gcc.talk.gccReceivers.GccPackageReplacedReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receivers.DirectReplyReceiver" />
-        <receiver android:name=".receivers.MarkAsReadReceiver" />
-        <receiver android:name=".receivers.DismissRecordingAvailableReceiver" />
-        <receiver android:name=".receivers.ShareRecordingToChatReceiver" />
+        <receiver android:name="com.gcc.talk.gccReceivers.GccDirectReplyReceiver" />
+        <receiver android:name="com.gcc.talk.gccReceivers.GccMarkAsReadReceiver" />
+        <receiver android:name="com.gcc.talk.gccReceivers.GccDismissRecordingAvailableReceiver" />
+        <receiver android:name="com.gcc.talk.gccReceivers.GccShareRecordingToChatReceiver" />
 
         <service
-            android:name=".utils.SyncService"
+            android:name="com.gcc.talk.gccUtils.GccSyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -301,7 +301,7 @@
         </service>
 
         <service
-            android:name=".utils.AuthenticatorService"
+            android:name="com.gcc.talk.gccUtils.GccAuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -312,7 +312,7 @@
         </service>
 
         <service
-            android:name=".services.CallForegroundService"
+            android:name="com.gcc.talk.gccServices.GccCallForegroundService"
             android:exported="false"
             android:foregroundServiceType="microphone|camera" />
 

@@ -54,7 +54,7 @@
                 android:layout_marginEnd="@dimen/standard_margin"
                 android:layout_marginBottom="@dimen/standard_margin"
                 android:contentDescription="@string/avatar"
-                android:src="@drawable/account_circle_96dp"
+                android:src="@drawable/account_icon"
                 android:transitionName="userAvatar.transitionTag" />
 
             <androidx.emoji2.widget.EmojiTextView
@@ -118,7 +118,7 @@
                     android:tint="@android:color/white"
                     app:elevation="0dp"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_folder" />
+                    app:srcCompat="@drawable/photo_icc" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/avatar_camera"
@@ -131,7 +131,7 @@
                     android:tint="@android:color/white"
                     app:elevation="0dp"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+                    app:srcCompat="@drawable/gallary_icc" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/avatar_delete"

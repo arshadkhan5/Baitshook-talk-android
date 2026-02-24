@@ -101,9 +101,9 @@
                 android:background="@drawable/shape_grouped_incoming_message"
                 android:padding="@dimen/dialog_padding"
                 android:scrollbars="vertical"
-                tools:text="This is the last message\nof an incredibly long two line conversation text"
                 android:textColor="@color/nc_incoming_text_default"
-                android:textSize="@dimen/message_text_size" />
+                android:textSize="@dimen/message_text_size"
+                tools:text="This is the last message\nof an incredibly long two line conversation text" />
 
             <LinearLayout
                 android:id="@+id/translated_message_container"
@@ -122,9 +122,9 @@
                     android:background="@drawable/shape_grouped_incoming_message"
                     android:padding="@dimen/dialog_padding"
                     android:scrollbars="vertical"
-                    tools:text="This is the last message\nof an incredibly long two line conversation text"
                     android:textColor="@color/nc_incoming_text_default"
-                    android:textSize="@dimen/message_text_size" />
+                    android:textSize="@dimen/message_text_size"
+                    tools:text="This is the last message\nof an incredibly long two line conversation text" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/copy_translated_message"

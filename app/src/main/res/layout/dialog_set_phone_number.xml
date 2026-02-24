@@ -9,7 +9,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingStart="@dimen/standard_half_padding"
-    android:paddingEnd="@dimen/standard_half_padding">
+    android:background="@color/bg_default"
+    android:paddingEnd="@dimen/standard_half_padding"
+    android:paddingBottom="@dimen/standard_quarter_margin">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phone_input_layout"

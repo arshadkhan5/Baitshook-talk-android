@@ -13,6 +13,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@drawable/rounded_drawable"
+    android:backgroundTint="@color/bg_popup"
     android:padding="12dp">
 
     <TextView

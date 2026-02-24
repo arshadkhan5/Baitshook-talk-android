@@ -10,16 +10,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/bg_default"
     android:paddingBottom="@dimen/standard_half_padding">
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
         android:id="@+id/bottom_sheet_drag_handle"
         android:layout_width="match_parent"
+        android:background="@drawable/rounded_drawable"
         android:layout_height="wrap_content" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_quarter_margin"
+        android:background="@drawable/rounded_drawable"
         android:fillViewport="true"
         android:scrollbars="none">
 
@@ -138,7 +142,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_quarter_margin"
+        android:background="@drawable/rounded_drawable">
 
         <LinearLayout
             android:id="@+id/message_actions"

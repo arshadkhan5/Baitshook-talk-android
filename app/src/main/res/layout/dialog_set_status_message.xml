@@ -16,6 +16,7 @@
     android:paddingStart="@dimen/standard_padding"
     android:paddingEnd="@dimen/standard_padding"
     android:paddingBottom="@dimen/standard_padding"
+    android:background="@color/bg_default"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView

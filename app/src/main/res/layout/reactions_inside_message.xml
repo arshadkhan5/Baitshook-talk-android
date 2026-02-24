@@ -9,6 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/standard_eighth_margin"
+    android:background="@color/bg_popup"
     android:orientation="horizontal">
 
     <androidx.compose.ui.platform.ComposeView

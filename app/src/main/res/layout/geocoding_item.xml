@@ -12,6 +12,7 @@
     android:layout_height="wrap_content"
     android:minHeight="56dp"
     android:orientation="horizontal"
+    android:background="@color/bg_default"
     tools:ignore="UseCompoundDrawables">
 
     <ImageView

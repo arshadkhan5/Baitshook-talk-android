@@ -81,7 +81,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_delete" />
 
-        <com.nextcloud.talk.ui.MicInputCloud
+        <com.gcc.talk.gccUi.MicInputCloud
             android:id="@+id/micInputCloud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

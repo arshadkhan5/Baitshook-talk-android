@@ -9,7 +9,7 @@
 
     <item android:drawable="@color/colorPrimary" />
     <item
-        android:drawable="@drawable/ic_logo"
+        android:drawable="@drawable/gcc_icon"
         android:gravity="center" />
 
 </layer-list>

@@ -12,6 +12,8 @@
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/standard_padding"
     android:paddingTop="@dimen/standard_padding"
+    android:paddingBottom="16dp"
+    android:background="@color/bg_default"
     android:paddingEnd="@dimen/standard_half_padding">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -27,7 +29,7 @@
         app:boxStrokeColor="@color/colorPrimary"
         app:hintTextColor="@color/colorPrimary">
 
-        <com.nextcloud.talk.utils.EmojiTextInputEditText
+        <com.gcc.talk.gccUtils.GccEmojiTextInputEditText
             android:id="@+id/text_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

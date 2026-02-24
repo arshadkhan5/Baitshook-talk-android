@@ -8,8 +8,8 @@
   ~ SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <resources>
-    <color name="colorPrimary">#0082C9</color>
-    <color name="colorPrimaryDark">#006AA3</color>
+    <color name="colorPrimary">#12867D</color>
+    <color name="colorPrimaryDark">#0A3C37</color>
     <color name="colorAccent">@color/colorPrimary</color>
     <color name="disabled_text">#ff6F6F6F</color>
 
@@ -27,12 +27,13 @@
     <color name="high_emphasis_menu_icon">#8Affffff</color>
 
     <color name="bg_default">#121212</color>
+    <color name="bg_popup">#121212</color>
     <color name="bg_default_semitransparent">#99121212</color>
 
     <color name="fg_default">#FFFFFF</color>
     <color name="fg_inverse">#121212</color>
 
-    <color name="nc_darkGreen">#00AA00</color>
+    <color name="nc_darkGreen">#00C853</color>
 
     <color name="conversation_unread_bubble">#373737</color>
     <color name="conversation_unread_bubble_text">#D8D8D8</color>

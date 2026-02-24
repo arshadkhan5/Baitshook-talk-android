@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:clipChildren="true"
         android:clipToPadding="false"
+        android:background="@color/bg_popup"
         android:windowContentOverlay="@null">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -38,6 +39,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/bg_default"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView

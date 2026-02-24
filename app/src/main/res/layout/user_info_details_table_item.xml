@@ -41,7 +41,7 @@
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.nextcloud.talk.utils.EmojiTextInputEditText
+        <com.gcc.talk.gccUtils.GccEmojiTextInputEditText
             android:id="@+id/user_info_edit_text_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

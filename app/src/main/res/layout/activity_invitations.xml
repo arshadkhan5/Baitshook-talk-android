@@ -9,12 +9,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_default"
     android:orientation="vertical"
     android:animateLayoutChanges="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/invitations_appbar"
         android:layout_width="match_parent"
+        android:background="@color/bg_popup"
         android:layout_height="wrap_content">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/invitations_toolbar"
@@ -32,6 +34,7 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/invitations_recycler_view"
             android:layout_width="match_parent"
+        android:background="@drawable/rounded_drawable"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"/>
 

@@ -43,7 +43,7 @@
             android:layout_height="@dimen/avatar_size_big"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/standard_margin"
-            android:src="@drawable/account_circle_96dp"
+            android:src="@drawable/account_icon"
             android:transitionName="userAvatar.transitionTag"
             android:contentDescription="@string/avatar" />
 
@@ -103,7 +103,7 @@
                 android:tint="@android:color/white"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_folder" />
+                app:srcCompat="@drawable/photo_icc" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/avatar_camera"
@@ -116,7 +116,7 @@
                 android:tint="@android:color/white"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+                app:srcCompat="@drawable/gallary_icc" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/avatar_delete"

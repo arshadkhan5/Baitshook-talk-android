@@ -17,6 +17,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/remote_file_browser_items_appbar"
         android:layout_width="match_parent"
+        android:background="@color/bg_popup"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -104,6 +105,7 @@
         android:id="@+id/swipe_refresh_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bg_popup"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:footerDividersEnabled="false">
 

@@ -32,7 +32,7 @@
             android:layout_margin="24dp"
             android:background="@drawable/shape_oval"
             android:backgroundTint="@color/nc_darkGreen"
-            android:src="@drawable/ic_call_white_24dp"
+            android:src="@drawable/accept_call"
             android:contentDescription="@string/nc_call_button_content_description_answer_voice_only" />
 
         <ImageButton
@@ -42,7 +42,7 @@
             android:layout_margin="24dp"
             android:background="@drawable/shape_oval"
             android:backgroundTint="@color/nc_darkRed"
-            android:src="@drawable/ic_call_end_white_24px"
+            android:src="@drawable/call_decline"
             android:contentDescription="@string/nc_call_button_content_description_hangup" />
 
         <ImageButton

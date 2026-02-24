@@ -11,7 +11,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:background="@color/white">
+    tools:background="@color/bg_default">
 
     <ProgressBar
         android:id="@+id/poll_loading_progressbar"

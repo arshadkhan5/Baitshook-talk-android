@@ -17,6 +17,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/message_search_appbar"
         android:layout_width="match_parent"
+        android:background="@color/bg_popup"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -29,7 +30,9 @@
             app:navigationIconTint="@color/fontAppbar"
             app:popupTheme="@style/appActionBarPopupMenu"
             app:titleTextColor="@color/fontAppbar"
-            tools:title="@string/nc_app_product_name"></com.google.android.material.appbar.MaterialToolbar>
+            tools:title="@string/nc_app_product_name">
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -43,8 +46,9 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
+        android:background="@color/bg_popup"
         android:layout_height="match_parent"
-        app:layout_behavior="com.nextcloud.talk.utils.FABAwareScrollingViewBehavior">
+        app:layout_behavior="com.nextcloud.talk.utils.GccFABAwareScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/message_search_recycler"

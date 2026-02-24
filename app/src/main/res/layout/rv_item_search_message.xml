@@ -9,16 +9,21 @@
   ~
   ~ Adapted from https://github.com/stfalcon-studio/ChatKit/blob/master/chatkit/src/main/res/layout/item_dialog.xml
 -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:focusable="true"
-    android:background="?attr/selectableItemBackground"
+    android:background="@drawable/rounded_drawable"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
     android:layout_margin="@dimen/double_margin_between_elements"
     tools:background="@color/white">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
 
     <ImageView
         android:id="@+id/thumbnail"
@@ -61,4 +66,6 @@
         tools:text="...this is a message result from unified search, which includes ellipses..." />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

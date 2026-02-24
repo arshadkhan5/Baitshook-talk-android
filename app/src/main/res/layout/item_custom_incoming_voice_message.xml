@@ -15,6 +15,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/standard_margin"
     android:layout_marginTop="2dp"
+    android:background="@drawable/rounded_drawable"
     android:layout_marginEnd="@dimen/standard_margin"
     android:layout_marginBottom="2dp">
 
@@ -84,7 +85,7 @@
                     app:iconSize="40dp"
                     app:iconTint="@color/nc_incoming_text_default" />
 
-                <com.nextcloud.talk.ui.WaveformSeekBar
+                <com.gcc.talk.gccUi.WaveformSeekBar
                     android:id="@+id/seekbar"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/min_size_clickable_area"
@@ -96,7 +97,7 @@
                     android:thumb="@drawable/voice_message_outgoing_seek_bar_slider"
                     tools:progress="0" />
 
-                <com.nextcloud.talk.ui.PlaybackSpeedControl
+                <com.gcc.talk.gccUi.PlaybackSpeedControl
                     android:id="@+id/playbackSpeedControlBtn"
                     style="@style/Widget.AppTheme.Button.IconButton"
                     android:layout_width="wrap_content"

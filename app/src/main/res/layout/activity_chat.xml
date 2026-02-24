@@ -153,6 +153,7 @@
             app:incomingBubblePaddingLeft="@dimen/message_bubble_corners_horizontal_padding"
             app:incomingBubblePaddingRight="@dimen/message_bubble_corners_horizontal_padding"
             app:incomingBubblePaddingTop="@dimen/message_bubble_corners_vertical_padding"
+            android:background="@drawable/rounded_drawable"
             app:incomingDefaultBubbleColor="@color/bg_message_list_incoming_bubble"
             app:incomingDefaultBubblePressedColor="@color/bg_message_list_incoming_bubble"
             app:incomingDefaultBubbleSelectedColor="@color/transparent"
@@ -204,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@color/bg_default">
+                android:background="@color/colorPrimary">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/out_of_office_container"

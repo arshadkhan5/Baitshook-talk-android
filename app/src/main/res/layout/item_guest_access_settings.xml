@@ -11,6 +11,8 @@
     android:id="@+id/guest_access_settings"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:elevation="4dp"
+    android:background="@drawable/rounded_drawable"
     android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView

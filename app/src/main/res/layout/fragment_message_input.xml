@@ -11,6 +11,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg_default"
     android:orientation="vertical">
 
     <include
@@ -64,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.nextcloud.talk.ui.MessageInput
+            <com.gcc.talk.gccUi.MessageInput
                 android:id="@+id/fragment_message_input_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
                 android:maxLength="1000"
                 app:attachmentButtonBackground="@color/transparent"
                 app:attachmentButtonHeight="48dp"
-                app:attachmentButtonIcon="@drawable/ic_baseline_attach_file_24"
+                app:attachmentButtonIcon="@drawable/add_plus_icon"
                 app:attachmentButtonMargin="0dp"
                 app:attachmentButtonWidth="48dp"
                 app:delayTypingStatus="200"

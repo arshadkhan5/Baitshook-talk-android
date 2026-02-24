@@ -13,6 +13,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_container"
     android:layout_width="match_parent"
+    android:background="@color/bg_default"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:visibility="visible">
@@ -65,6 +66,7 @@
                 android:layout_marginStart="@dimen/standard_margin"
                 android:layout_marginTop="@dimen/standard_quarter_margin"
                 android:layout_marginEnd="@dimen/standard_margin"
+                android:background="@color/bg_default"
                 android:animateLayoutChanges="true"
                 android:visibility="gone"
                 tools:visibility="visible">
@@ -76,7 +78,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/standard_margin"
                     android:contentDescription="@string/avatar"
-                    tools:src="@drawable/account_circle_48dp" />
+                    tools:src="@drawable/account_icon" />
 
                 <androidx.emoji2.widget.EmojiTextView
                     android:id="@+id/display_name_text"
@@ -163,6 +165,7 @@
                     layout="@layout/item_notification_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="@dimen/standard_quarter_margin" />
 
                 <include
@@ -170,13 +173,15 @@
                     layout="@layout/item_webinar_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/standard_quarter_margin" />
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp" />
 
                 <include
                     android:id="@+id/guest_access_view"
                     layout="@layout/item_guest_access_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="@dimen/standard_quarter_margin" />
 
             </LinearLayout>
@@ -188,8 +193,8 @@
                 android:layout_marginTop="@dimen/standard_quarter_margin"
                 android:orientation="horizontal"
                 android:padding="@dimen/standard_half_padding"
-                android:visibility="gone"
-                tools:visibility="gone">
+                android:visibility="visible"
+                tools:visibility="visible">
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -213,6 +218,10 @@
                 android:id="@+id/shared_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
+                android:layout_marginHorizontal="16dp"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_drawable"
                 android:layout_marginTop="@dimen/standard_quarter_margin"
                 android:orientation="vertical">
 
@@ -282,12 +291,16 @@
                 layout="@layout/item_recording_consent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standard_quarter_margin" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="@dimen/standard_half_margin" />
 
             <LinearLayout
                 android:id="@+id/conversation_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_drawable"
                 android:layout_marginTop="@dimen/standard_quarter_margin"
                 android:orientation="vertical">
 
@@ -371,7 +384,9 @@
                 android:id="@+id/lock_conversation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:layout_marginHorizontal="16dp"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_drawable"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/standard_margin"
                 android:paddingEnd="@dimen/standard_margin">
@@ -416,9 +431,13 @@
                 android:id="@+id/participants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standard_quarter_margin"
+                android:layout_marginTop="@dimen/standard_half_margin"
                 android:orientation="vertical"
                 android:visibility="gone"
+
+                android:layout_marginHorizontal="16dp"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_drawable"
                 tools:ignore="UnknownIdInLayout"
                 tools:visibility="visible">
 
@@ -498,8 +517,10 @@
                 android:id="@+id/list_bans_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
                 android:orientation="horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_drawable"
                 android:paddingStart="@dimen/standard_margin"
                 android:paddingTop="@dimen/standard_half_margin"
                 android:paddingEnd="@dimen/standard_margin"
@@ -525,6 +546,9 @@
                 android:id="@+id/danger_zone_options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_drawable"
                 android:layout_marginTop="@dimen/standard_quarter_margin"
                 android:orientation="vertical">
 

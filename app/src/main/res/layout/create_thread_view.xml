@@ -10,6 +10,7 @@
     android:id="@+id/createThreadView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_popup"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -28,7 +29,7 @@
             android:text="@string/thread_title"
             android:textColor="?attr/colorControlNormal" />
 
-        <com.nextcloud.talk.utils.EmojiTextInputEditText
+        <com.gcc.talk.gccUtils.GccEmojiTextInputEditText
             android:id="@+id/createThreadInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
