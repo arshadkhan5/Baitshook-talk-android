@@ -1,0 +1,27 @@
+/*
+ * Nextcloud Talk - Android Client
+ *
+ * SPDX-FileCopyrightText: 2017-2018 Mario Danic <mario@lovelyhq.com>
+ * SPDX-FileCopyrightText: 2017 Keval Patel
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Partly based on https://github.com/kevalpatel2106/EmoticonGIFKeyboard/blob/master/emoticongifkeyboard/src/main/java/com/kevalpatel2106/emoticongifkeyboard/internal/emoticon/EmoticonUtils.java
+ */
+package com.gcc.talk.gccUtils;
+
+import com.vanniktech.emoji.EmojiInformation;
+import com.vanniktech.emoji.Emojis;
+
+import androidx.annotation.Nullable;
+
+public final class GccTextMatchers {
+
+    public static boolean isMessageWithSingleEmoticonOnly(@Nullable final String text) {
+        if (text != null) {
+            final EmojiInformation emojiInformation = Emojis.emojiInformation(text);
+            return (emojiInformation.isOnlyEmojis && emojiInformation.getEmojiCount() == 1);
+        } else {
+            return false;
+        }
+    }
+}

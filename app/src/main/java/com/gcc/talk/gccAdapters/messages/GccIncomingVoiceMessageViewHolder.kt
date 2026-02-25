@@ -1,0 +1,390 @@
+/*
+ * Nextcloud Talk - Android Client
+ *
+ * SPDX-FileCopyrightText: 2024 Christian Reiner <foss@christian-reiner.info>
+ * SPDX-FileCopyrightText: 2021 Andy Scherzinger <info@andy-scherzinger.de>
+ * SPDX-FileCopyrightText: 2021 Tim Krüger <t@timkrueger.me>
+ * SPDX-FileCopyrightText: 2021 Marcel Hibbe <dev@mhibbe.de>
+ * SPDX-FileCopyrightText: 2017-2018 Mario Danic <mario@lovelyhq.com>
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+package com.gcc.talk.gccAdapters.messages
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
+import android.view.View
+import android.widget.SeekBar
+import androidx.core.content.ContextCompat
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import autodagger.AutoInjector
+import coil.load
+import com.nextcloud.android.common.ui.theme.utils.ColorRole
+import com.gcc.talk.R
+import com.gcc.talk.gccApplication.GccTalkApplication
+import com.gcc.talk.gccApplication.GccTalkApplication.Companion.sharedApplication
+import com.gcc.talk.gccChat.GccChatActivity
+import com.gcc.talk.gccChat.data.model.GccChatMessage
+import com.gcc.talk.databinding.ItemCustomIncomingVoiceMessageBinding
+import com.gcc.talk.gccUi.theme.ViewThemeUtils
+import com.gcc.talk.gccUtils.GccApiUtils
+import com.gcc.talk.gccUtils.GccChatMessageUtils
+import com.gcc.talk.gccUtilss.GccDateUtils
+import com.gcc.talk.gccUtils.message.GccMessageUtils
+import com.gcc.talk.gccUtils.preferences.GccAppPreferences
+import com.stfalcon.chatkit.messages.MessageHolders
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.concurrent.ExecutionException
+import javax.inject.Inject
+
+@AutoInjector(GccTalkApplication::class)
+class GccIncomingVoiceMessageViewHolder(incomingView: View, payload: Any) :
+    MessageHolders.IncomingTextMessageViewHolder<GccChatMessage>(incomingView, payload) {
+
+    private val binding: ItemCustomIncomingVoiceMessageBinding = ItemCustomIncomingVoiceMessageBinding.bind(itemView)
+
+    @JvmField
+    @Inject
+    var context: Context? = null
+
+    @Inject
+    lateinit var viewThemeUtils: ViewThemeUtils
+
+    @Inject
+    lateinit var messageUtils: GccMessageUtils
+
+    @Inject
+    lateinit var dateUtils: GccDateUtils
+
+    @Inject
+    lateinit var appPreferences: GccAppPreferences
+
+    lateinit var message: GccChatMessage
+
+    lateinit var voiceMessageInterface: GccVoiceMessageInterface
+    lateinit var commonMessageInterface: CommonMessageInterface
+    private var isBound = false
+
+    @SuppressLint("SetTextI18n")
+    override fun onBind(message: GccChatMessage) {
+        super.onBind(message)
+        if (isBound) {
+            handleIsPlayingVoiceMessageState(message)
+            return
+        }
+
+        this.message = message
+        sharedApplication!!.componentApplication.inject(this)
+
+        val filename = message.selectedIndividualHashMap!!["name"]
+        val retrieved = appPreferences.getWaveFormFromFile(filename)
+        if (retrieved.isNotEmpty() &&
+            message.voiceMessageFloatArray == null ||
+            message.voiceMessageFloatArray?.isEmpty() == true
+        ) {
+            message.voiceMessageFloatArray = retrieved.toFloatArray()
+            binding.seekbar.setWaveData(message.voiceMessageFloatArray!!)
+        }
+        binding.messageTime.text = dateUtils.getLocalTimeStringFromTimestamp(message.timestamp)
+
+        setAvatarAndAuthorOnMessageItem(message)
+
+        colorizeMessageBubble(message)
+
+        itemView.isSelected = false
+
+        // parent message handling
+        setParentMessageDataOnMessageItem(message)
+
+        updateDownloadState(message)
+        binding.seekbar.max = MAX
+        viewThemeUtils.talk.themeWaveFormSeekBar(binding.seekbar)
+        viewThemeUtils.platform.colorCircularProgressBar(binding.progressBar, ColorRole.ON_SURFACE_VARIANT)
+
+        showVoiceMessageDuration(message)
+        if (message.isDownloadingVoiceMessage) {
+            showVoiceMessageLoading()
+        } else {
+            if (message.voiceMessageFloatArray == null || message.voiceMessageFloatArray!!.isEmpty()) {
+                binding.seekbar.setWaveData(FloatArray(0))
+            } else {
+                binding.seekbar.setWaveData(message.voiceMessageFloatArray!!)
+            }
+            binding.progressBar.visibility = View.GONE
+        }
+
+        if (message.resetVoiceMessage) {
+            resetVoiceMessage(message)
+        }
+
+        binding.seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // unused atm
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // unused atm
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    voiceMessageInterface.updateMediaPlayerProgressBySlider(message, progress)
+                }
+            }
+        })
+
+        CoroutineScope(Dispatchers.Default).launch {
+            (voiceMessageInterface as GccChatActivity).chatViewModel.voiceMessagePlayBackUIFlow.onEach { speed ->
+                withContext(Dispatchers.Main) {
+                    binding.playbackSpeedControlBtn.setSpeed(speed)
+                }
+            }.collect()
+        }
+
+        binding.playbackSpeedControlBtn.setSpeed(appPreferences.getPreferredPlayback(message.actorId))
+
+        GccReaction().showReactions(
+            message,
+            ::clickOnReaction,
+            ::longClickOnReaction,
+            binding.reactions,
+            binding.messageTime.context,
+            false,
+            viewThemeUtils
+        )
+
+        isBound = true
+    }
+
+    private fun showVoiceMessageDuration(message: GccChatMessage) {
+        if (message.voiceMessageDuration > 0) {
+            binding.voiceMessageDuration.visibility = View.VISIBLE
+        } else {
+            binding.voiceMessageDuration.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun resetVoiceMessage(chatMessage: GccChatMessage) {
+        binding.playPauseBtn.visibility = View.VISIBLE
+        binding.playPauseBtn.icon = ContextCompat.getDrawable(
+            context!!,
+            R.drawable.ic_baseline_play_arrow_voice_message_24
+        )
+        binding.seekbar.progress = SEEKBAR_START
+        chatMessage.resetVoiceMessage = false
+        chatMessage.voiceMessagePlayedSeconds = 0
+        showVoiceMessageDuration(message)
+    }
+
+    private fun longClickOnReaction(chatMessage: GccChatMessage) {
+        commonMessageInterface.onLongClickReactions(chatMessage)
+    }
+
+    private fun clickOnReaction(chatMessage: GccChatMessage, emoji: String) {
+        commonMessageInterface.onClickReaction(chatMessage, emoji)
+    }
+
+    private fun handleIsPlayingVoiceMessageState(message: GccChatMessage) {
+        colorizeMessageBubble(message)
+        if (message.isPlayingVoiceMessage) {
+            showPlayButton()
+            binding.playPauseBtn.icon = ContextCompat.getDrawable(
+                context!!,
+                R.drawable.ic_baseline_pause_voice_message_24
+            )
+
+            val d = message.voiceMessageDuration.toLong()
+            val t = message.voiceMessagePlayedSeconds.toLong()
+            binding.voiceMessageDuration.text = android.text.format.DateUtils.formatElapsedTime(d - t)
+            binding.voiceMessageDuration.visibility = View.VISIBLE
+            binding.seekbar.progress = message.voiceMessageSeekbarProgress
+        } else {
+            showVoiceMessageDuration(message)
+            binding.playPauseBtn.visibility = View.VISIBLE
+            binding.playPauseBtn.icon = ContextCompat.getDrawable(
+                context!!,
+                R.drawable.ic_baseline_play_arrow_voice_message_24
+            )
+        }
+    }
+
+    private fun updateDownloadState(message: GccChatMessage) {
+        // check if download worker is already running
+        val fileId = message.selectedIndividualHashMap!!["id"]
+        val workers = WorkManager.getInstance(context!!).getWorkInfosByTag(fileId!!)
+
+        try {
+            for (workInfo in workers.get()) {
+                if (workInfo.state == WorkInfo.State.RUNNING || workInfo.state == WorkInfo.State.ENQUEUED) {
+                    showVoiceMessageLoading()
+                    WorkManager.getInstance(context!!).getWorkInfoByIdLiveData(workInfo.id)
+                        .observeForever { info: WorkInfo? ->
+                            showStatus(info)
+                        }
+                }
+            }
+        } catch (e: ExecutionException) {
+            Log.e(TAG, "Error when checking if worker already exists", e)
+        } catch (e: InterruptedException) {
+            Log.e(TAG, "Error when checking if worker already exists", e)
+        }
+    }
+
+    private fun showStatus(info: WorkInfo?) {
+        if (info != null) {
+            when (info.state) {
+                WorkInfo.State.RUNNING -> {
+                    Log.d(TAG, "WorkInfo.State.RUNNING in ViewHolder")
+                    showVoiceMessageLoading()
+                }
+
+                WorkInfo.State.SUCCEEDED -> {
+                    Log.d(TAG, "WorkInfo.State.SUCCEEDED in ViewHolder")
+                    showPlayButton()
+                }
+
+                WorkInfo.State.FAILED -> {
+                    Log.d(TAG, "WorkInfo.State.FAILED in ViewHolder")
+                    showPlayButton()
+                }
+
+                else -> {
+                }
+            }
+        }
+    }
+
+    private fun showPlayButton() {
+        binding.playPauseBtn.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showVoiceMessageLoading() {
+        binding.playPauseBtn.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun setAvatarAndAuthorOnMessageItem(message: GccChatMessage) {
+        val actorName = message.actorDisplayName
+        if (!actorName.isNullOrBlank()) {
+            binding.messageAuthor.visibility = View.VISIBLE
+            binding.messageAuthor.text = actorName
+            binding.messageUserAvatar.setOnClickListener {
+                (payload as? GccMessagePayload)?.profileBottomSheet?.showFor(message, itemView.context)
+            }
+        } else {
+            binding.messageAuthor.setText(R.string.nc_nick_guest)
+        }
+
+        if (!message.isGrouped && !message.isOneToOneConversation && !message.isFormerOneToOneConversation) {
+            GccChatMessageUtils().setAvatarOnMessage(binding.messageUserAvatar, message, viewThemeUtils)
+        } else {
+            if (message.isOneToOneConversation || message.isFormerOneToOneConversation) {
+                binding.messageUserAvatar.visibility = View.GONE
+            } else {
+                binding.messageUserAvatar.visibility = View.INVISIBLE
+            }
+            binding.messageAuthor.visibility = View.GONE
+        }
+    }
+
+    private fun colorizeMessageBubble(message: GccChatMessage) {
+        viewThemeUtils.talk.themeIncomingMessageBubble(
+            bubble,
+            message.isGrouped,
+            message.isDeleted,
+            message.wasPlayedVoiceMessage
+        )
+    }
+
+    @Suppress("Detekt.TooGenericExceptionCaught", "Detekt.LongMethod")
+    private fun setParentMessageDataOnMessageItem(message: GccChatMessage) {
+        if (message.parentMessageId != null && !message.isDeleted) {
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val chatActivity = commonMessageInterface as GccChatActivity
+                    val urlForChatting = GccApiUtils.getUrlForChat(
+                        chatActivity.chatApiVersion,
+                        chatActivity.conversationUser?.baseUrl,
+                        chatActivity.roomToken
+                    )
+
+                    val parentChatMessage = withContext(Dispatchers.IO) {
+                        chatActivity.chatViewModel.getMessageById(
+                            urlForChatting,
+                            chatActivity.currentConversation!!,
+                            message.parentMessageId!!
+                        ).first()
+                    }
+                    parentChatMessage.activeUser = message.activeUser
+                    parentChatMessage.imageUrl?.let {
+                        binding.messageQuote.quotedMessageImage.visibility = View.VISIBLE
+                        binding.messageQuote.quotedMessageImage.load(it) {
+                            addHeader(
+                                "Authorization",
+                                GccApiUtils.getCredentials(message.activeUser!!.username, message.activeUser!!.token)!!
+                            )
+                        }
+                    } ?: run {
+                        binding.messageQuote.quotedMessageImage.visibility = View.GONE
+                    }
+                    binding.messageQuote.quotedMessageAuthor.text = parentChatMessage.actorDisplayName
+                        ?: context!!.getText(R.string.nc_nick_guest)
+                    binding.messageQuote.quotedMessage.text = messageUtils
+                        .enrichChatReplyMessageText(
+                            binding.messageQuote.quotedMessage.context,
+                            parentChatMessage,
+                            true,
+                            viewThemeUtils
+                        )
+
+                    binding.messageQuote.quotedMessageAuthor
+                        .setTextColor(ContextCompat.getColor(context!!, R.color.textColorMaxContrast))
+
+                    viewThemeUtils.talk.themeParentMessage(
+                        parentChatMessage,
+                        message,
+                        binding.messageQuote.quotedChatMessageView
+                    )
+
+                    binding.messageQuote.quotedChatMessageView.visibility = View.VISIBLE
+
+                    binding.messageQuote.quotedChatMessageView.visibility =
+                        if (!message.isDeleted &&
+                            message.parentMessageId != null &&
+                            message.parentMessageId != chatActivity.conversationThreadId
+                        ) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
+                } catch (e: Exception) {
+                    Log.d(TAG, "Error when processing parent message in view holder", e)
+                }
+            }
+        } else {
+            binding.messageQuote.quotedChatMessageView.visibility = View.GONE
+        }
+    }
+
+    fun assignVoiceMessageInterface(voiceMessageInterface: GccVoiceMessageInterface) {
+        this.voiceMessageInterface = voiceMessageInterface
+    }
+
+    fun assignCommonMessageInterface(commonMessageInterface: CommonMessageInterface) {
+        this.commonMessageInterface = commonMessageInterface
+    }
+
+    companion object {
+        private const val TAG = "VoiceInMessageView"
+        private const val SEEKBAR_START: Int = 0
+        private const val MAX: Int = 100
+    }
+}

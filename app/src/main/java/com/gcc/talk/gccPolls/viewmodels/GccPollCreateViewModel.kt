@@ -1,0 +1,206 @@
+/*
+ * Nextcloud Talk - Android Client
+ *
+ * SPDX-FileCopyrightText: 2022 Marcel Hibbe <dev@mhibbe.de>
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+package com.gcc.talk.gccPolls.viewmodels
+
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.gcc.talk.gccPolls.adapters.GccPollCreateOptionItem
+import com.gcc.talk.gccPolls.model.GccPoll
+import com.gcc.talk.gccPolls.repositories.GccPollRepository
+import com.gcc.talk.gccUtils.GccApiUtils
+import com.gcc.talk.gccUtils.database.user.GccCurrentUserProviderOld
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+
+class GccPollCreateViewModel @Inject constructor(
+    private val repository: GccPollRepository,
+    private val currentUserProvider: GccCurrentUserProviderOld
+) : ViewModel() {
+
+    private lateinit var roomToken: String
+
+    sealed interface ViewState
+    open class PollCreationState(val enableAddOptionButton: Boolean, val enableCreatePollButton: Boolean) : ViewState
+    object PollCreatedState : ViewState
+    object PollCreationFailedState : ViewState
+
+    private val currentUser = currentUserProvider.currentUser.blockingGet()
+
+    private val _viewState: MutableLiveData<ViewState> = MutableLiveData(
+        PollCreationState(
+            enableAddOptionButton = true,
+            enableCreatePollButton = false
+        )
+    )
+    val viewState: LiveData<ViewState>
+        get() = _viewState
+
+    private var _options: MutableLiveData<ArrayList<GccPollCreateOptionItem>> =
+        MutableLiveData<ArrayList<GccPollCreateOptionItem>>()
+    val options: LiveData<ArrayList<GccPollCreateOptionItem>>
+        get() = _options
+
+    private var _question: String = ""
+    val question: String
+        get() = _question
+
+    private var _privatePoll: Boolean = false
+    val privatePoll: Boolean
+        get() = _privatePoll
+
+    private var _multipleAnswer: Boolean = false
+    val multipleAnswer: Boolean
+        get() = _multipleAnswer
+
+    private var disposable: Disposable? = null
+
+    init {
+        addOption()
+        addOption()
+    }
+
+    fun setData(roomToken: String) {
+        this.roomToken = roomToken
+        updateCreationState()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable?.dispose()
+    }
+
+    fun addOption() {
+        val item = GccPollCreateOptionItem("")
+        val currentOptions: ArrayList<GccPollCreateOptionItem> = _options.value ?: ArrayList()
+        currentOptions.add(item)
+        _options.value = currentOptions
+        updateCreationState()
+    }
+
+    fun removeOption(item: GccPollCreateOptionItem) {
+        val currentOptions: ArrayList<GccPollCreateOptionItem> = _options.value ?: ArrayList()
+        currentOptions.remove(item)
+        _options.value = currentOptions
+        updateCreationState()
+    }
+
+    fun createPoll() {
+        var maxVotes = 1
+        if (multipleAnswer) {
+            maxVotes = 0
+        }
+
+        var resultMode = 0
+        if (privatePoll) {
+            resultMode = 1
+        }
+
+        _options.value = _options.value?.filter { it.pollOption.isNotEmpty() } as ArrayList<GccPollCreateOptionItem>
+
+        if (_question.isNotEmpty() && _options.value?.isNotEmpty() == true) {
+            _viewState.value = PollCreationState(enableAddOptionButton = false, enableCreatePollButton = false)
+
+            val credentials = GccApiUtils.getCredentials(currentUser.username, currentUser.token)
+            val url = GccApiUtils.getUrlForPoll(
+                currentUser.baseUrl!!,
+                roomToken
+            )
+
+            repository.createPoll(
+                credentials,
+                url,
+                roomToken,
+                _question,
+                _options.value!!.map { it.pollOption },
+                resultMode,
+                maxVotes
+            )
+                .doOnSubscribe { disposable = it }
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(PollObserver())
+        }
+    }
+
+    fun setQuestion(question: String) {
+        _question = question
+        updateCreationState()
+    }
+
+    fun setPrivatePoll(checked: Boolean) {
+        _privatePoll = checked
+    }
+
+    fun setMultipleAnswer(checked: Boolean) {
+        _multipleAnswer = checked
+    }
+
+    fun optionsItemTextChanged() {
+        updateCreationState()
+    }
+
+    private fun updateCreationState() {
+        _viewState.value = PollCreationState(enableAddOptionButton(), enableCreatePollButton())
+    }
+
+    private fun enableCreatePollButton(): Boolean = _question.isNotEmpty() && atLeastTwoOptionsAreFilled()
+
+    private fun atLeastTwoOptionsAreFilled(): Boolean {
+        if (_options.value != null) {
+            var filledOptions = 0
+            _options.value?.forEach {
+                if (it.pollOption.isNotEmpty()) {
+                    filledOptions++
+                }
+                if (filledOptions >= 2) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private fun enableAddOptionButton(): Boolean {
+        if (_options.value != null && _options.value?.size != 0) {
+            _options.value?.forEach {
+                if (it.pollOption.isBlank()) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    inner class PollObserver : Observer<GccPoll> {
+
+        lateinit var poll: GccPoll
+
+        override fun onSubscribe(d: Disposable) = Unit
+
+        override fun onNext(response: GccPoll) {
+            poll = response
+        }
+
+        override fun onError(e: Throwable) {
+            Log.e(TAG, "Failed to create poll", e)
+            _viewState.value = PollCreationFailedState
+        }
+
+        override fun onComplete() {
+            _viewState.value = PollCreatedState
+        }
+    }
+
+    companion object {
+        private val TAG = GccPollCreateViewModel::class.java.simpleName
+    }
+}
